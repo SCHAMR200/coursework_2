@@ -33,7 +33,7 @@ pipeline {
            scannerHome = tool 'SonarQubeScanner'
           }
           steps {
-            withSonarQubeEnv('SonarQubeScanner') {
+            withSonarQubeEnv('SonarQube') {
                 sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=server-jenkins-sonar-js -Dsonar.sources=."
             }
           }
