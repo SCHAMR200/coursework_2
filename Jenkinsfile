@@ -29,7 +29,9 @@ pipeline {
           }
         }
         stage('Run Sonarqube Tests') {
-          def scannerHome = tool 'SonarQubeScanner'
+          environment {
+           scannerHome = tool 'SonarQubeScanner'
+          }
           steps {
             withSonarQubeEnv() {
                 sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=server-jenkins-sonar-js -Dsonar.sources=."
