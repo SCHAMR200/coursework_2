@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_Coursework2_name": {
+            "defaultValue": "Coursework2",
+            "type": "String"
+        },
+        "disks_Coursework2_disk1_9f7399775d08411c9f34e95f62bc143a_externalid": {
+            "defaultValue": "/subscriptions/27e65f08-544c-4b5c-9642-071b3cb7618e/resourceGroups/DEVOPS/providers/Microsoft.Compute/disks/Coursework2_disk1_9f7399775d08411c9f34e95f62bc143a",
+            "type": "String"
+        },
+        "networkInterfaces_coursework2536_externalid": {
+            "defaultValue": "/subscriptions/27e65f08-544c-4b5c-9642-071b3cb7618e/resourceGroups/DevOps/providers/Microsoft.Network/networkInterfaces/coursework2536",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('virtualMachines_Coursework2_name')]",
+            "location": "eastus",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_Coursework2_name'), '_disk1_9f7399775d08411c9f34e95f62bc143a')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[parameters('disks_Coursework2_disk1_9f7399775d08411c9f34e95f62bc143a_externalid')]"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_Coursework2_name')]",
+                    "adminUsername": "schamr200",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false,
+                        "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_coursework2536_externalid')]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "https://schamr200.blob.core.windows.net/"
+                    }
+                }
+            }
+        }
+    ]
+}
